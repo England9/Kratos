@@ -48,9 +48,10 @@ export function Fitness() {
   const { completeWorkout, state } = useApp();
   const [active, setActive] = useState<ActiveSession | null>(null);
   const [pulseSet, setPulseSet] = useState<string | null>(null);
+  const activeStartedAt = active?.startedAt;
 
   useEffect(() => {
-    if (!active) {
+    if (!activeStartedAt) {
       return undefined;
     }
 
@@ -66,7 +67,7 @@ export function Fitness() {
     }, 1000);
 
     return () => window.clearInterval(interval);
-  }, [active?.startedAt]);
+  }, [activeStartedAt]);
 
   const activeVolume = useMemo(() => (active ? sessionVolume(active.exercises) : 0), [active]);
   const completedSets = useMemo(
